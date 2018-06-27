@@ -26,23 +26,27 @@
             <div class="item"><button ng-click="isuruDrinkHotChocolate()">+</button></div>
         </div>
 
-        <span class="graphContainer">
-            <h1>Jose</h1>
-            <div class="graph" ng-repeat="drink in joseHourly">
-                <div class="graphBar" style="height: {{drink.count * 30}}px">
-                    <div class="date">{{drink.time}}</div>
+        <div class="graphsGrid">
+            <span class="graphContainer">
+                <h1>Jose</h1>
+                <div class="graph" ng-repeat="drink in joseHourly">
+                    <div class="graphBar" style="height: {{drink.count * 30}}px">
+                        <div class="date">{{drink.time}}</div>
+                        <div class="drinkCount">{{drink.count}</div>
+                    </div>
                 </div>
-            </div>
-        </span>
+            </span>
 
-        <span class="graphContainer">
-            <h1>Isuru</h1>
-            <div class="graph" ng-repeat="drink in isuruHourly">
-                <div class="graphBar" style="height: {{drink.count * 30}}px">
-                    <div class="date">{{drink.time}}</div>
+            <span class="graphContainer">
+                <h1>Isuru</h1>
+                <div class="graph" ng-repeat="drink in isuruHourly">
+                    <div class="graphBar" style="height: {{drink.count * 30}}px">
+                        <div class="date">{{drink.time}}</div>
+                        <div class="drinkCount">{{drink.count}</div>
+                    </div>
                 </div>
-            </div>
-        </span>
+            </span>
+        </div>
 
     </div>
 
