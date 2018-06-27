@@ -1,0 +1,36 @@
+<div class="login">
+    <div class="gridItem" id="username"><input ng-model="tempUsername" placeholder="Username"></div>
+    <div class="gridItem" id="password"><input ng-model="tempPassword" placeholder="Password" type="password"></div>
+    <div class="gridItem"></div>
+    <div class="gridItem"><button ng-click="getLoginInfo()">Login</button></div>
+
+    <style>
+        .login {
+            margin-top: 200px;
+            display: grid;
+            grid-template-columns: 150px 50px;
+            grid-template-rows: 50px 50px;
+        }
+
+        .gridItem {
+            align-content: right;
+        }
+
+        #username {
+            grid-column: span 2;
+        }
+
+        #password {
+            grid-column: span 2;
+        }
+
+        input {
+            width: 200px
+        }
+
+
+
+    </style>
+
+
+</div>
