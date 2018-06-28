@@ -8,6 +8,9 @@ myApp.controller('hotChocolateController',
         $scope.joseHourly = [{time: 8, count: 3}, {time: 9, count: 4}, {time: 10, count: 1}];
         $scope.isuruHourly = [];
 
+
+        $scope.response = $.get("http://localhost:5000/jose/drinks/", function(data, status) {console.log("Data: " + data, "   Status: " + status)});
+
         $scope.joseDrinkHotChocolate = function() {
             $scope.newDrink("Jose");
             console.log(drinkDataService.drinks);

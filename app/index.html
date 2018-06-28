@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="styling.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -26,24 +27,33 @@
             <div class="item"><button ng-click="isuruDrinkHotChocolate()">+</button></div>
         </div>
 
-        <span class="graphContainer">
-            <h1>Jose</h1>
-            <div class="graph" ng-repeat="drink in joseHourly">
-                <div class="graphBar" style="height: {{drink.count * 30}}px">
-                    <div class="date">{{drink.time}}</div>
-                </div>
-            </div>
-        </span>
 
-        <span class="graphContainer">
-            <h1>Isuru</h1>
-            <div class="graph" ng-repeat="drink in isuruHourly">
-                <div class="graphBar" style="height: {{drink.count * 30}}px">
-                    <div class="date">{{drink.time}}</div>
-                </div>
-            </div>
-        </span>
 
+
+        <div class="gridContainer">
+            <span class="graphContainer">
+                <h1>Jose</h1>
+                <div class="graph" ng-repeat="drink in joseHourly">
+                    <div class="graphBar" style="height: {{drink.count * 30}}px">
+                        <div class="date">{{drink.time}}</div>
+                        <div class="drinkCount">{{drink.count}}</div>
+                    </div>
+                </div>
+            </span>
+
+            <span class="graphContainer">
+                <h1>Isuru</h1>
+                <div class="graph" ng-repeat="drink in isuruHourly">
+                    <div class="graphBar" style="height: {{drink.count * 30}}px">
+                        <div class="date">{{drink.time}}</div>
+                        <div class="drinkCount">{{drink.count}}</div>
+                    </div>
+                </div>
+            </span>
+        </div>
+
+
+    
     </div>
 
 
