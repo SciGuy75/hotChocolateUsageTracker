@@ -1,0 +1,49 @@
+
+
+
+
+    <div class="messagesContainer">
+        <div class="message" ng-repeat="message in messages" style="text-align:{{getAlignment(message.from)}}">
+                <div class="messageContents">{{message.contents}}</div>
+                <div class="messageFromAndDate">{{message.from}} - {{message.date}}</div>
+        </div>
+    </div>
+
+
+
+    <form class="messageBoxAndButton" ng-submit="sendMessage(); setScrollPosition()">
+        <input class="newMessageContent" ng-model="currentMessage.contents">
+        <button class="sendMessageButton" ng-click="sendMessage(); setScrollPosition();">Send</button>
+    </form>
+
+
+
+
+<style>
+    .messagesContainer {
+        height: 300px;
+        overflow-y: auto;
+        padding: 25px;
+        font-family: sans-serif;
+    }
+
+    .message {
+        background-color: #9bdaff;
+        margin: 3px;
+    }
+
+    .messageContents {
+        font-size: 14pt;
+    }
+
+    .messageFromAndDate {
+        font-size: 7pt;
+    }
+
+    .messageBoxAndButton {
+        justify-content: right;
+    }
+
+
+
+</style>
