@@ -1,18 +1,26 @@
 from flask import Flask, jsonify, request
 from flask_restful import Api, reqparse
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-api = Api(app)
+CORS(app)
 
-isuruDrinks = []
+# @app.after_request
+# def after_request(response):
+#   response.headers.add('Access-Control-Allow-Origin', '*')
+#   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+#   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+#   return response
+
+
+isuruDrinks = [{"time": 16, "count": 5}]
 
 joseDrinks = []
 
 
-
 @app.route('/jose/drinks/', methods=['GET'])
 def getJoseDrinks():
-    return jsonify(joseDrinks), 200
+    return jsonify(joseDrinks), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 @app.route('/jose/drinks/', methods=['POST'])
@@ -26,14 +34,15 @@ def postJoseDrink():
             return jsonify(joseDrinks), 201
 
     joseDrinks.append({"time": time, "count": 1})
-    return jsonify(joseDrinks), 201
+    return jsonify(joseDrinks), 201, {'Access-Control-Allow-Origin': '*'}
 
 
 
 
 @app.route('/isuru/drinks/', methods=['GET'])
+#@cross_origin()
 def getIsuruDrinks():
-    return jsonify(isuruDrinks), 200
+    return jsonify(isuruDrinks), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 @app.route('/isuru/drinks/', methods=['POST'])
@@ -47,7 +56,7 @@ def postIsuruDrink():
             return jsonify(isuruDrinks), 201
 
     isuruDrinks.append({"time": time, "count": 1})
-    return jsonify(isururinks), 201
+    return jsonify(isururinks), 201, {'Access-Control-Allow-Origin': '*'}
     
 
-app.run(debug=True)
+app.run(debug=True, threaded=True)

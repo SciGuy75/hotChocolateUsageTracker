@@ -5,11 +5,21 @@ myApp.controller('hotChocolateController',
 
         $scope.joseCount = 0;
         $scope.isuruCount = 0;
-        $scope.joseHourly = [{time: 8, count: 3}, {time: 9, count: 4}, {time: 10, count: 1}];
+        $scope.joseHourly = [{time: 14, count: 3}, {time: 9, count: 4}, {time: 10, count: 1}];
         $scope.isuruHourly = [];
 
 
-        $scope.response = $.get("http://localhost:5000/jose/drinks/", function(data, status) {console.log("Data: " + data, "   Status: " + status)});
+
+
+        $scope.getDrinks = function(user) {
+            //user = user.lower();
+            $.get('localhost:5000/' + user + '/drinks/', function(data){
+                console.log("Data received: " + data);
+            });
+        }
+
+        //$scope.getDrinks('jose')
+
 
         $scope.joseDrinkHotChocolate = function() {
             $scope.newDrink("Jose");
@@ -24,6 +34,8 @@ myApp.controller('hotChocolateController',
         $scope.newDrink = function(_name) {
 
             var hour = new Date().getHours()
+
+            $scope.getRequest();
 
             if (_name == "Jose"){
                 for (var i = 0; i < $scope.joseHourly.length; i++){
@@ -58,7 +70,27 @@ myApp.controller('hotChocolateController',
             }
         }
 
+        $scope.getRequest = function() {
+            var request = $.ajax({
+                url: "http://127.0.0.1:5000/isuru/drinks/",
+                method: "GET",
+                data: {},
+                crossDomain: true,
+                dataType: 'json',
+                success: function(data) {console.log(data)},
+                failure: function() {console.log("Did not work")}
+            });
+
+            request.done(function(data){
+                console.log(data);
+                console.log("Count: " + data[0]["count"] + "  Time: " + data[0]["time"]);
+                $scope.isuruHourly.push({count: data[0]["count"], time: data[0]["time"]});
+                console.log("Test Worked");
+            })
+
+        }
 
 
+        $scope.getRequest();
 
     });
