@@ -3,7 +3,7 @@ from flask_restful import Api, reqparse
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # @app.after_request
 # def after_request(response):
@@ -13,7 +13,7 @@ CORS(app)
 #   return response
 
 
-isuruDrinks = [{"time": 16, "count": 5}]
+isuruDrinks = [{"time": 16, "count": 5}, {"time": 19, "count": 5}]
 
 joseDrinks = []
 
@@ -24,14 +24,17 @@ def getJoseDrinks():
 
 
 @app.route('/jose/drinks/', methods=['POST'])
+@cross_origin()
 def postJoseDrink():
     global joseDrinks
+    print("Done")
     time = int(request.args.get("time"))
+    
 
     for item in joseDrinks:
         if (item["time"] == time):
             item["count"] += 1
-            return jsonify(joseDrinks), 201
+            return jsonify(joseDrinks), 201, {'Access-Control-Allow-Origin': '*'}
 
     joseDrinks.append({"time": time, "count": 1})
     return jsonify(joseDrinks), 201, {'Access-Control-Allow-Origin': '*'}
@@ -53,7 +56,7 @@ def postIsuruDrink():
     for item in isuruDrinks:
         if (item["time"] == time):
             item["count"] += 1
-            return jsonify(isuruDrinks), 201
+            return jsonify(isuruDrinks), 201, {'Access-Control-Allow-Origin': '*'}
 
     isuruDrinks.append({"time": time, "count": 1})
     return jsonify(isururinks), 201, {'Access-Control-Allow-Origin': '*'}

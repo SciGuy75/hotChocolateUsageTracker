@@ -1,25 +1,13 @@
 'use strict';
 
 myApp.controller('hotChocolateController',
-    function loginController($scope, drinkDataService) {
-
+    function loginController($scope, drinkDataService, drinksApiService) {
         $scope.joseCount = 0;
         $scope.isuruCount = 0;
-        $scope.joseHourly = [{time: 14, count: 3}, {time: 9, count: 4}, {time: 10, count: 1}];
+        $scope.joseHourly = [];
         $scope.isuruHourly = [];
 
-
-
-
-        $scope.getDrinks = function(user) {
-            //user = user.lower();
-            $.get('localhost:5000/' + user + '/drinks/', function(data){
-                console.log("Data received: " + data);
-            });
-        }
-
-        //$scope.getDrinks('jose')
-
+    
 
         $scope.joseDrinkHotChocolate = function() {
             $scope.newDrink("Jose");
@@ -33,9 +21,7 @@ myApp.controller('hotChocolateController',
 
         $scope.newDrink = function(_name) {
 
-            var hour = new Date().getHours()
-
-            $scope.getRequest();
+            var hour = new Date().getHours();
 
             if (_name == "Jose"){
                 for (var i = 0; i < $scope.joseHourly.length; i++){
@@ -43,11 +29,13 @@ myApp.controller('hotChocolateController',
                         $scope.joseHourly[i].count++;
                         $scope.joseCount++;
                         drinkDataService.drinks.push({name: _name, date: hour});
+                        $scope.api_postDrink('jose', hour, (data)=>{alert("Success")});
                         return;
                     }
                 }
 
                 // If this is reached, it didn't exist yet
+                $scope.api_postDrink('jose', 22, (data)=>{alert("Success")});
                 $scope.joseHourly.push({time: hour, count: 1})
                 $scope.joseCount++;
                 drinkDataService.drinks.push({name: _name, date: hour});
@@ -70,27 +58,62 @@ myApp.controller('hotChocolateController',
             }
         }
 
-        $scope.getRequest = function() {
-            var request = $.ajax({
-                url: "http://127.0.0.1:5000/isuru/drinks/",
-                method: "GET",
-                data: {},
-                crossDomain: true,
-                dataType: 'json',
-                success: function(data) {console.log(data)},
-                failure: function() {console.log("Did not work")}
-            });
+        
 
-            request.done(function(data){
-                console.log(data);
-                console.log("Count: " + data[0]["count"] + "  Time: " + data[0]["time"]);
-                $scope.isuruHourly.push({count: data[0]["count"], time: data[0]["time"]});
-                console.log("Test Worked");
-            })
 
+        $scope.api_getDrinks = function(user, callback){
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.open("GET", "http://127.0.0.1:5000/" + user.toLowerCase() + "/drinks/", true);
+            xhr.onreadystatechange = function(){
+                   if (xhr.readyState === 4 && xhr.status === 200){
+                       callback(xhr.response);
+                   }
+            }
+            xhr.send();
+        }
+
+        $scope.api_postDrink = function(user, time, callback){
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.open("POST", "http://localhost:5000/" + user.toLowerCase() + "/drinks/", true);
+            xhr.onreadystatechange = function(){
+                   if (xhr.readyState === 4 && xhr.status === 201){
+                       callback(xhr.response);
+                   }
+            }
+            xhr.send(time);
         }
 
 
-        $scope.getRequest();
+
+
+
+        $scope.api_getDrinks('isuru', (data)=>{
+            for(var i = 0; i<data.length; i++) {
+                var hourlyUse = data[i];
+                for (var i = 0; i < $scope.isuruHourly.length; i++){
+                    if ($scope.isuruHourly[i].time == data[i].time){
+                        $scope.isuruHourly[i].count++;
+                        $scope.isuruCount++;
+                    }
+                }
+                if (i == $scope.isuruHourly.length) $scope.isuruHourly.push(data[i]);
+            }
+        });
+
+        $scope.api_getDrinks('jose', (data)=>{
+            for(var i = 0; i<data.length; i++) {
+                var hourlyUse = data[i];
+                for (var i = 0; i < $scope.joseHourly.length; i++){
+                    if ($scope.joseHourly[i].time == data[i].time){
+                        $scope.joseHourly[i].count++;
+                        $scope.joseCount++;
+                    }
+                }
+                if (i == $scope.joseHourly.length) $scope.joseHourly.push(data[i]);
+            }
+        });
+
 
     });
