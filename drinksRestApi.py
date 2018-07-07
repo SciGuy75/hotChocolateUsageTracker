@@ -56,10 +56,10 @@ def postIsuruDrink():
     for item in isuruDrinks:
         if (item["time"] == time):
             item["count"] += 1
-            return jsonify(isuruDrinks), 201, {'Access-Control-Allow-Origin': '*'}
+            return jsonify(isuruDrinks), 201#, {'Access-Control-Allow-Origin': '*'}
 
     isuruDrinks.append({"time": time, "count": 1})
-    return jsonify(isururinks), 201, {'Access-Control-Allow-Origin': '*'}
+    return jsonify(isururinks), 201#, {'Access-Control-Allow-Origin': '*'}
     
 
 app.run(debug=True, threaded=True)

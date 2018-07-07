@@ -75,7 +75,7 @@ myApp.controller('hotChocolateController',
         $scope.api_postDrink = function(user, time, callback){
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'json';
-            xhr.open("POST", "http://localhost:5000/" + user.toLowerCase() + "/drinks/", true);
+            xhr.open("POST", "http://127.0.0.1:5000/" + user.toLowerCase() + "/drinks/", true);
             xhr.onreadystatechange = function(){
                    if (xhr.readyState === 4 && xhr.status === 201){
                        callback(xhr.response);
