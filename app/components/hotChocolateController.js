@@ -11,12 +11,10 @@ myApp.controller('hotChocolateController',
 
         $scope.joseDrinkHotChocolate = function() {
             $scope.newDrink("Jose");
-            console.log(drinkDataService.drinks);
         };
 
         $scope.isuruDrinkHotChocolate = function() {
             $scope.newDrink("Isuru");
-            console.log(drinkDataService.drinks);
         };
 
         $scope.newDrink = function(_name) {
@@ -29,13 +27,13 @@ myApp.controller('hotChocolateController',
                         $scope.joseHourly[i].count++;
                         $scope.joseCount++;
                         drinkDataService.drinks.push({name: _name, date: hour});
-                        $scope.api_postDrink('jose', hour, (data)=>{alert("Success")});
+                        $scope.api_postDrink('jose', hour, (data)=>{console.log("Successful Post")});
                         return;
                     }
                 }
 
                 // If this is reached, it didn't exist yet
-                $scope.api_postDrink('jose', 22, (data)=>{alert("Success")});
+                $scope.api_postDrink('jose', hour, (data)=>{console.log("Successful Post")});
                 $scope.joseHourly.push({time: hour, count: 1})
                 $scope.joseCount++;
                 drinkDataService.drinks.push({name: _name, date: hour});
@@ -47,11 +45,13 @@ myApp.controller('hotChocolateController',
                         $scope.isuruHourly[i].count++;
                         $scope.isuruCount++;
                         drinkDataService.drinks.push({name: _name, date: hour});
+                        $scope.api_postDrink('isuru', hour, (data)=>{console.log("Successful Post")});
                         return;
                     }
                 }
 
                 // If this is reached, it didn't exist yet
+                $scope.api_postDrink('isuru', hour, (data)=>{console.log("Successful Post")});
                 $scope.isuruHourly.push({time: hour, count: 1})
                 $scope.isuruCount++;
                 drinkDataService.drinks.push({name: _name, date: hour});
@@ -59,7 +59,6 @@ myApp.controller('hotChocolateController',
         }
 
         
-
 
         $scope.api_getDrinks = function(user, callback){
             var xhr = new XMLHttpRequest();
