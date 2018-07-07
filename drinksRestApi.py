@@ -13,7 +13,7 @@ CORS(app, support_credentials=True)
 #   return response
 
 
-isuruDrinks = [{"time": 16, "count": 5}, {"time": 19, "count": 5}]
+isuruDrinks = []
 
 joseDrinks = []
 
@@ -33,10 +33,10 @@ def postJoseDrink():
     for item in joseDrinks:
         if (item["time"] == time):
             item["count"] += 1
-            return jsonify(joseDrinks), 201#, {'Access-Control-Allow-Origin': '*'}
+            return jsonify(joseDrinks), 201
 
     joseDrinks.append({"time": time, "count": 1})
-    return jsonify(joseDrinks), 201#, {'Access-Control-Allow-Origin': '*'}
+    return jsonify(joseDrinks), 201
 
 
 
@@ -56,10 +56,24 @@ def postIsuruDrink():
     for item in isuruDrinks:
         if (item["time"] == time):
             item["count"] += 1
-            return jsonify(isuruDrinks), 201#, {'Access-Control-Allow-Origin': '*'}
+            return jsonify(isuruDrinks), 201
 
     isuruDrinks.append({"time": time, "count": 1})
-    return jsonify(isururinks), 201#, {'Access-Control-Allow-Origin': '*'}
+    return jsonify(isuruDrinks), 201
     
+
+@app.route('/drinks/', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def saveData():
+    with open('savedDrinkData', 'w') as f:
+        f.write(isuruDrinks)
+        f.write(joseDrinks)
+    return "SAVED"
+
+
+
+
+
+
 
 app.run(debug=True, threaded=True)

@@ -59,7 +59,7 @@ myApp.controller('hotChocolateController',
         }
 
         
-
+        // Gets drink info for a user
         $scope.api_getDrinks = function(user, callback){
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'json';
@@ -72,6 +72,7 @@ myApp.controller('hotChocolateController',
             xhr.send();
         }
 
+        // Posts the hour for a user
         $scope.api_postDrink = function(user, time, callback){
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'json';
@@ -84,7 +85,17 @@ myApp.controller('hotChocolateController',
             xhr.send(time);
         }
 
-
+        $scope.api_saveData = function(user, callback){
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.open("GET", "http://127.0.0.1:5000/" + user.toLowerCase() + "/drinks/", true);
+            xhr.onreadystatechange = function(){
+                   if (xhr.readyState === 4 && xhr.status === 200){
+                       callback(xhr.response);
+                   }
+            }
+            xhr.send();
+        }
 
 
 
@@ -99,6 +110,8 @@ myApp.controller('hotChocolateController',
                 }
                 if (i == $scope.isuruHourly.length) $scope.isuruHourly.push(data[i]);
             }
+            // This updates the ng-model
+            $scope.$apply();
         });
 
         $scope.api_getDrinks('jose', (data)=>{
@@ -112,6 +125,8 @@ myApp.controller('hotChocolateController',
                 }
                 if (i == $scope.joseHourly.length) $scope.joseHourly.push(data[i]);
             }
+            // This updates the ng-model
+            $scope.$apply();
         });
 
 
